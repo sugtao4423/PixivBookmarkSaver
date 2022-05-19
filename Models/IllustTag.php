@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-class IllustDetailTag
+class IllustTag
 {
 
     protected string $tag;

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/IllustDetailUrls.php';
-require_once __DIR__ . '/IllustDetailTags.php';
+require_once __DIR__ . '/IllustUrls.php';
+require_once __DIR__ . '/IllustTags.php';
 
-class IllustDetail
+class Illust
 {
 
     protected string $illustId;
@@ -16,8 +16,8 @@ class IllustDetail
     protected string $description;
     protected string $alt;
     protected int $illustType;
-    protected IllustDetailUrls $urls;
-    protected IllustDetailTags $tags;
+    protected IllustUrls $urls;
+    protected IllustTags $tags;
     protected string $userId;
     protected string $userName;
     protected string $userAccount;
@@ -37,8 +37,8 @@ class IllustDetail
         $this->description = $data['description'];
         $this->alt = $data['alt'];
         $this->illustType = $data['illustType'];
-        $this->urls = new IllustDetailUrls($data['urls']);
-        $this->tags = new IllustDetailTags($data['tags']);
+        $this->urls = new IllustUrls($data['urls']);
+        $this->tags = new IllustTags($data['tags']);
         $this->userId = $data['userId'];
         $this->userName = $data['userName'];
         $this->userAccount = $data['userAccount'];
@@ -89,12 +89,12 @@ class IllustDetail
         return $this->illustType;
     }
 
-    public function getUrls(): IllustDetailUrls
+    public function getUrls(): IllustUrls
     {
         return $this->urls;
     }
 
-    public function getTags(): IllustDetailTags
+    public function getTags(): IllustTags
     {
         return $this->tags;
     }

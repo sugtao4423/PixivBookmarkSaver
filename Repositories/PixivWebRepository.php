@@ -29,7 +29,7 @@ class PixivWebRepository
         return $this->get($url);
     }
 
-    public function getIllustDetail(string|int $illustId): ?string
+    public function getIllust(string|int $illustId): ?string
     {
         $url = self::PIXIV_BASE_URL . "/ajax/illust/${illustId}";
         return $this->get($url);

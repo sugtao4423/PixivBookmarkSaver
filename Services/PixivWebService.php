@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/../Models/Bookmark.php';
-require_once __DIR__ . '/../Models/IllustDetail.php';
+require_once __DIR__ . '/../Models/Illust.php';
 require_once __DIR__ . '/../Models/IllustFile.php';
 require_once __DIR__ . '/../Repositories/PixivWebRepository.php';
 
@@ -57,11 +57,11 @@ class PixivWebService
 
     /**
      * @param string|int $illustId
-     * @return ?IllustDetail
+     * @return ?Illust
      */
-    public function getIllustDetail(string|int $illustId): ?IllustDetail
+    public function getIllust(string|int $illustId): ?Illust
     {
-        $result = $this->pixivWebRepository->getIllustDetail($illustId);
+        $result = $this->pixivWebRepository->getIllust($illustId);
         if ($result === null) {
             return null;
         }
@@ -71,17 +71,17 @@ class PixivWebService
             return null;
         }
 
-        return new IllustDetail($json['body']);
+        return new Illust($json['body']);
     }
 
     /**
-     * @param IllustDetail $illustDetail
+     * @param Illust $illust
      * @return ?IllustFile[]
      */
-    public function getIllustFiles(IllustDetail $illustDetail): ?array
+    public function getIllustFiles(Illust $illust): ?array
     {
-        $count = $illustDetail->getPageCount();
-        $originalImageUrl = $illustDetail->getUrls()->getOriginal();
+        $count = $illust->getPageCount();
+        $originalImageUrl = $illust->getUrls()->getOriginal();
 
         $illustFiles = [];
         for ($i = 0; $i < $count; $i++) {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-require_once __DIR__ . '/IllustDetailTag.php';
+require_once __DIR__ . '/IllustTag.php';
 
-class IllustDetailTags
+class IllustTags
 {
 
     protected string $authorId;
@@ -12,7 +12,7 @@ class IllustDetailTags
     protected bool $writable;
 
     /**
-     * @var IllustDetailTag[]
+     * @var IllustTag[]
      */
     protected array $tags;
 
@@ -22,7 +22,7 @@ class IllustDetailTags
         $this->isLocked = $data['isLocked'];
         $this->writable = $data['writable'];
         $this->tags = array_map(function (array $tag) {
-            return new IllustDetailTag($tag);
+            return new IllustTag($tag);
         }, $data['tags']);
     }
 
@@ -42,7 +42,7 @@ class IllustDetailTags
     }
 
     /**
-     * @return IllustTagDetail[]
+     * @return IllustTag[]
      */
     public function getTags(): array
     {

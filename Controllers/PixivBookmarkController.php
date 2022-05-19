@@ -24,9 +24,9 @@ class PixivBookmarkController
         echo "Saving bookmarks... 0 / $bookmarkCount";
         for ($i = 0; $i < $bookmarkCount; $i++) {
             $bookmark = $bookmarks[$i];
-            $illust = $service->getIllustDetail($bookmark->getId());
+            $illust = $service->getIllust($bookmark->getId());
             if ($illust === null) {
-                echo 'Error: Failed to get illust detail.' . PHP_EOL;
+                echo 'Error: Failed to get illust.' . PHP_EOL;
                 exit(1);
             }
 

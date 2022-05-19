@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-class IllustDetailUrls
+class IllustUrls
 {
 
     protected string $original;
