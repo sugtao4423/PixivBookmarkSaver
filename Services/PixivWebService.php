@@ -77,6 +77,22 @@ class PixivWebService
 
     /**
      * @param Illust $illust
+     * @return ?IllustFile
+     */
+    public function getIllustThumbnail(Illust $illust): ?IllustFile
+    {
+        $url = $illust->getUrls()->getThumbnail();
+        $fileName = basename($url);
+
+        $image = $this->pixivWebRepository->getIllustImage($url);
+        if ($image === null) {
+            return null;
+        }
+        return new IllustFile($fileName, $image);
+    }
+
+    /**
+     * @param Illust $illust
      * @return ?IllustFile[]
      */
     public function getIllustFiles(Illust $illust): ?array

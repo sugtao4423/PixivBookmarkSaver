@@ -28,9 +28,6 @@ class PixivBookmarkController
             $publicBookmarks :
             array_merge($publicBookmarks, $privateBookmarks);
 
-        $illustSaveDir = __DIR__ . '/../bookmarks-' . $userId;
-        @mkdir($illustSaveDir);
-
         $bookmarkCount = count($bookmarks);
         echo "Saving bookmarks... 0 / $bookmarkCount";
         for ($i = 0; $i < $bookmarkCount; $i++) {
@@ -41,19 +38,34 @@ class PixivBookmarkController
                 exit(1);
             }
 
+            $thumbnail = $service->getIllustThumbnail($illust);
+            if ($thumbnail === null) {
+                echo 'Error: Failed to get thumbnail.' . PHP_EOL;
+                exit(1);
+            }
+            $this->saveIllustFiles($userId, [$thumbnail]);
+
             $files = $service->getIllustFiles($illust);
             if ($files === null) {
                 echo 'Error: Failed to get illust files.' . PHP_EOL;
                 exit(1);
             }
-
-            foreach ($files as $file) {
-                $filePath = $illustSaveDir . '/' . $file->getFileName();
-                file_put_contents($filePath, $file->getFileContent());
-            }
+            $this->saveIllustFiles($userId, $files);
 
             echo "\rSaving bookmarks... " . $i + 1 . " / $bookmarkCount";
         }
         echo PHP_EOL . 'Done!' . PHP_EOL;
+    }
+
+    private function saveIllustFiles(string|int $userId, array $illustFiles): void
+    {
+        $illustSaveDir = __DIR__ . '/../bookmarks-' . $userId;
+        if (!file_exists($illustSaveDir)) {
+            mkdir($illustSaveDir);
+        }
+        foreach ($illustFiles as $file) {
+            $filePath = $illustSaveDir . '/' . $file->getFileName();
+            file_put_contents($filePath, $file->getFileContent());
+        }
     }
 }
