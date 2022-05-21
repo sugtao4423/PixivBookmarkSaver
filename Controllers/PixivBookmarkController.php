@@ -11,11 +11,22 @@ class PixivBookmarkController
     {
         $service = new PixivWebService($cookie);
 
-        $bookmarks = $service->getBookmarks($userId);
-        if ($bookmarks === null) {
-            echo 'Error: Failed to get bookmarks.' . PHP_EOL;
+        $publicBookmarks = $service->getBookmarks($userId, true);
+        if ($publicBookmarks === null) {
+            echo 'Error: Failed to get public bookmarks.' . PHP_EOL;
             exit(1);
         }
+
+        $privateBookmarks = $service->getBookmarks($userId, false);
+        if ($privateBookmarks === null) {
+            echo 'Warning: Failed to get private bookmarks.' . PHP_EOL;
+            echo 'Warning: It could be another user\'s bookmark.' . PHP_EOL;
+            echo PHP_EOL;
+        }
+
+        $bookmarks = $privateBookmarks === null ?
+            $publicBookmarks :
+            array_merge($publicBookmarks, $privateBookmarks);
 
         $illustSaveDir = __DIR__ . '/../bookmarks-' . $userId;
         @mkdir($illustSaveDir);

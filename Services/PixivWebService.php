@@ -19,9 +19,10 @@ class PixivWebService
 
     /**
      * @param string|int $userId
+     * @param bool $isPublic
      * @return ?Bookmark[]
      */
-    public function getBookmarks(string|int $userId): ?array
+    public function getBookmarks(string|int $userId, bool $isPublic): ?array
     {
         /**
          * @var Bookmark[] $bookmarks
@@ -31,7 +32,7 @@ class PixivWebService
         $offset = 0;
         $limit = 48;
         do {
-            $result = $this->pixivWebRepository->getBookmarks($userId, $offset, $limit);
+            $result = $this->pixivWebRepository->getBookmarks($userId, $offset, $limit, $isPublic);
             if ($result === null) {
                 return null;
             }
